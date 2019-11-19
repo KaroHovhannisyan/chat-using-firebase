@@ -3,9 +3,11 @@ import { Button, Modal, ModalBody, ModalFooter, Label, Input, FormGroup, Form, F
 import Avatar from 'react-avatar';
 import {FaUpload} from "react-icons/fa"
 import FirebaseApi from "../api";
+import {useSession} from "../hooks/useSession";
 
 
 const AuthModal = (props) => {
+    const { user } = useSession();
     const [open, setOpen] = useState(true);
     const [authMode, setAuthMode] = useState(1); // Show Sign up at first
     const [email, setEmail] = useState("");
@@ -14,8 +16,11 @@ const AuthModal = (props) => {
     const [avatarUrl, setAvatarUrl] = useState(null);
 
     useEffect(() => {
+        if(user && user.email && open){
+            setOpen(false)
+        }
 
-    }, []);
+    },[user]);
 
     const onAuth = () => {
         if(authMode){ // Register
