@@ -14,9 +14,9 @@ class FirebaseApi {
         })
     }
 
-    static listenCollection(collectionName, cb){
+    static listenCollection(collectionName, cb, orderBy = "createdAt", order = "asc"){
         db.collection(collectionName)
-            .orderBy("createdAt")
+            .orderBy(orderBy, order)
             .onSnapshot({
                 includeMetadataChanges: true
             }, querySnapshot => {

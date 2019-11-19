@@ -40,7 +40,7 @@ export function useChat() {
             FirebaseApi.listenCollection(USERS_COLLECTION, data => {
                 setUsers(data);
                 setLoading(false);
-            })
+            }, "isOnline", "desc")
         },
         []
     )

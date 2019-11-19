@@ -2,6 +2,8 @@ import React, {useState, useRef, useEffect} from "react";
 import { FaPaperPlane } from 'react-icons/fa';
 import FirebaseApi from "../api";
 import {UncontrolledTooltip} from "reactstrap";
+import YouTube from 'react-youtube';
+import moment from "moment";
 
 
 const Content = ({messages, currentUser}) => {
@@ -10,6 +12,9 @@ const Content = ({messages, currentUser}) => {
 
 
     const handleSendMessage = () => {
+        if(!message){
+            return
+        }
         FirebaseApi.sendMessage(message, currentUser).then(() => {
             setMessage("")
             scrollToBottom()
@@ -18,10 +23,38 @@ const Content = ({messages, currentUser}) => {
 
     useEffect(()=> {
         scrollToBottom()
-    }, )
+    }, );
 
     const scrollToBottom = () => {
         messagesEnd.current.scrollTop = messagesEnd.current.scrollHeight;
+    };
+
+    const getParameterByName = (query, name) => {
+        const match = RegExp('[?&]' + name + '=([^&]*)').exec(query);
+        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    };
+
+    const getMessage = (message) => {
+        if(message.includes("youtube")){
+            const opts = {
+                height: '240px',
+                width: '360px',
+                playerVars: {
+                    autoplay: 0
+                }
+            };
+            return <p>
+                <YouTube
+                    opts={opts}
+                    videoId={getParameterByName(message, "v")}
+                />
+            </p>
+        }
+      return <p>{message}</p>
+    };
+
+    const getMessageSentTime = (time) => {
+        return  moment.unix(time.seconds).startOf('minutes').fromNow();
     }
 
     return <div className="content">
@@ -41,13 +74,13 @@ const Content = ({messages, currentUser}) => {
             <ul>
                 {currentUser && messages.map((message, index) => (
                     <li className={ message.from === currentUser.email ? "sent": "replies"}>
-                        <span className={"time"}>Today 16:78 </span>
+                        <span className={"time"}>{getMessageSentTime(message.createdAt)} </span>
                         <div className="user-chat clearfix">
                             <UncontrolledTooltip placement="top" target={`message${index}`}>
                                 {message.from === currentUser.email ? "You": message.from}
                             </UncontrolledTooltip>
                             <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" id={`message${index}`}/>
-                            <p>{message.message}</p>
+                            {getMessage(message.message)}
                         </div>
                     </li>
                 ))}
