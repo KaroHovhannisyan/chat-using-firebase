@@ -3,7 +3,6 @@ import Contacts from "./Contacts";
 import Content from "./Content";
 import {useChat} from "../hooks/useChat";
 import {useAuth} from "../hooks/useAuth";
-import {Button} from "reactstrap/";
 
 const Chat = () => {
     const { messages, users } = useChat();

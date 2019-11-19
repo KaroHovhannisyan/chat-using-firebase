@@ -10,29 +10,9 @@ const Contacts = ({users, messages, currentUser}) => {
         <div id="sidepanel">
             <div id="profile">
                 <div className="wrap">
-                    <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" className="online"
+                    <img id="profile-img" src={NO_AVATAR_IMAGE} className="online"
                          alt=""/>
-                    <p>{"Email"}</p>
-                    <i className="fa fa-chevron-down expand-button" aria-hidden="true"></i>
-                    <div id="status-options">
-                        <ul>
-                            <li id="status-online" className="active"><span className="status-circle"></span>
-                                <p>Online</p></li>
-                            <li id="status-away"><span className="status-circle"></span> <p>Away</p></li>
-                            <li id="status-busy"><span className="status-circle"></span> <p>Busy</p></li>
-                            <li id="status-offline"><span className="status-circle"></span> <p>Offline</p></li>
-                        </ul>
-                    </div>
-                    <div id="expanded">
-                        <label htmlFor="twitter"><i className="fa fa-facebook fa-fw"
-                                                    aria-hidden="true"></i></label>
-                        <input name="twitter" type="text" value="mikeross"/>
-                        <label htmlFor="twitter"><i className="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
-                        <input name="twitter" type="text" value="ross81"/>
-                        <label htmlFor="twitter"><i className="fa fa-instagram fa-fw"
-                                                    aria-hidden="true"></i></label>
-                        <input name="twitter" type="text" value="mike.ross"/>
-                    </div>
+                    <p>{currentUser && currentUser.email.slice(0,20)}</p>
                 </div>
             </div>
             <div id="contacts">
@@ -48,9 +28,9 @@ const Contacts = ({users, messages, currentUser}) => {
                     </li>
                 </ul>
                 <div className={"online-now"}>
-                    <span name="online">Online now</span>
+                    <span name="online">Users</span>
                     <ul>
-                    {users.map((user, id) => (
+                    {users.map(user => (
                         <li className="contact" key={user.email}>
                             <div className="wrap">
                                 <span className={`contact-status ${user.isOnline ? "online": "offline"}`}></span>

@@ -1,8 +1,6 @@
 import firebase from "../configs/firebase";
 import {MESSAGES_COLLECTION, USERS_COLLECTION} from "../configs/constants";
 const db = firebase.firestore();
-const storage = firebase.storage();
-
 
 class FirebaseApi {
     static sendMessage(message, from, to){
@@ -26,11 +24,6 @@ class FirebaseApi {
                 });
                 cb(data)
             });
-    }
-
-    static uploadFile(file, cb){
-        const storageRef = storage.ref("uploads");
-        storageRef.put(file).then(data => cb(data))
     }
 
     static signUp(data){

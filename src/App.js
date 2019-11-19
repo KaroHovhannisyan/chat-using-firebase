@@ -3,7 +3,7 @@ import Chat from "../src/components/Chat"
 import AuthModal from "./components/AuthModal";
 import MainContext from "./hooks/mainContext";
 import {useAuth} from "./hooks/useAuth";
-import './App.css';
+import './styles/index.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Spinner} from "reactstrap";
 

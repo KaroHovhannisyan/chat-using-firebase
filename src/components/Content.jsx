@@ -4,6 +4,7 @@ import FirebaseApi from "../api";
 import {UncontrolledTooltip} from "reactstrap";
 import YouTube from 'react-youtube';
 import moment from "moment";
+import {NO_AVATAR_IMAGE} from "../configs/constants";
 
 
 const Content = ({messages, currentUser}) => {
@@ -73,13 +74,13 @@ const Content = ({messages, currentUser}) => {
         <div className="messages" ref={messagesEnd}>
             <ul>
                 {currentUser && messages.map((message, index) => (
-                    <li className={ message.from === currentUser.email ? "sent": "replies"}>
+                    <li className={ message.from === currentUser.email ? "sent": "replies"} key={index}>
                         <span className={"time"}>{getMessageSentTime(message.createdAt)} </span>
                         <div className="user-chat clearfix">
                             <UncontrolledTooltip placement="top" target={`message${index}`}>
                                 {message.from === currentUser.email ? "You": message.from}
                             </UncontrolledTooltip>
-                            <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" id={`message${index}`}/>
+                            <img src={NO_AVATAR_IMAGE} alt="" id={`message${index}`}/>
                             {getMessage(message.message)}
                         </div>
                     </li>
