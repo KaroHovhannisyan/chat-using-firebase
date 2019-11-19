@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import firebase from "../configs/firebase";
-import {MESSAGES_COLLECTION} from "../configs/constants";
+import {MESSAGES_COLLECTION, USERS_COLLECTION} from "../configs/constants";
 import FirebaseApi from "../api";
 
 // export const useChat2 = () => {
@@ -30,10 +30,15 @@ export function useChat() {
     const [error, setError] = React.useState(false);
     const [loading, setLoading] = React.useState(true);
     const [messages, setMessages] = React.useState([]);
+    const [users, setUsers] = React.useState([]);
     useEffect(
         () => {
             FirebaseApi.listenCollection(MESSAGES_COLLECTION, data => {
                 setMessages(data);
+                setLoading(false);
+            })
+            FirebaseApi.listenCollection(USERS_COLLECTION, data => {
+                setUsers(data);
                 setLoading(false);
             })
         },
@@ -44,5 +49,6 @@ export function useChat() {
         error,
         loading,
         messages,
+        users
     }
 }
